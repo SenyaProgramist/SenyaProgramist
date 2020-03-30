@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>535595673886-fl6cj7743cqokrkqt8m9m9l7t76578sc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.535595673886-fl6cj7743cqokrkqt8m9m9l7t76578sc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCm41bB3HeESnlGeIxViRvTpiajxX9wSTQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>535595673886</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.arseniynasikovskiy.phrasal-verbs</string>
+	<key>PROJECT_ID</key>
+	<string>phrasal-verbs-6db97</string>
+	<key>STORAGE_BUCKET</key>
+	<string>phrasal-verbs-6db97.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:535595673886:ios:b0ade93a9ddf56f538010f</string>
+	<key>DATABASE_URL</key>
+	<string>https://phrasal-verbs-6db97.firebaseio.com</string>
+</dict>
+</plist>

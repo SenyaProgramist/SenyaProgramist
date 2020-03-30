@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "535595673886",
+    "firebase_url": "https://phrasal-verbs-6db97.firebaseio.com",
+    "project_id": "phrasal-verbs-6db97",
+    "storage_bucket": "phrasal-verbs-6db97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535595673886:android:8207b9528382a29f38010f",
+        "android_client_info": {
+          "package_name": "com.arseniynasikovskiy.phrasal_verbs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535595673886-nn6luhfhuarqjutgk8mqtl85dekfnp96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB7vh1S7ug_PBNIlTMUmqOXbj7H-_OexE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535595673886-nn6luhfhuarqjutgk8mqtl85dekfnp96.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "535595673886-fl6cj7743cqokrkqt8m9m9l7t76578sc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arseniynasikovskiy.phrasal-verbs"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
