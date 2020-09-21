@@ -170,7 +170,7 @@ class GameCard extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w800,
-                            fontSize: width / 20),
+                            fontSize: width / 21),
                       ),
                     )
                   ],
@@ -178,8 +178,8 @@ class GameCard extends StatelessWidget {
               ),
             ),
             Positioned(
-                bottom: -height / 50,
-                right: -width / 20,
+                bottom: -height / 51,
+                right: -width / 21,
                 child: SvgPicture.asset(
                   'assets/$iconData.svg',
                   color: Colors.redAccent,
