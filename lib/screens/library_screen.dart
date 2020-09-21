@@ -192,7 +192,8 @@ class _LibraryScreenState extends State<LibraryScreen>
                   ),
                   child: EnhancedFutureBuilder(
 //                    future: provider.getLikedPhrasalVerbs(),
-                    future: verbsByLibraryStyle(),
+                    future: Future.delayed(Duration(milliseconds: 200),
+                        () => verbsByLibraryStyle()),
                     rememberFutureResult: true,
                     whenDone: (data) {
                       if (data.isNotEmpty) {
@@ -220,20 +221,23 @@ class _LibraryScreenState extends State<LibraryScreen>
                                     var phrasalVerb = phrasalVerbs[item];
                                     return GestureDetector(
                                       onTap: () async {
+
                                         if (await provider
                                             .isUnlocked(phrasalVerb)) {
+                                          provider.vibrate(2);
                                           await provider.setTempLikedVerbs();
                                           setState(() {
                                             selectedPhrasalVerb = phrasalVerb;
                                           });
                                           await panelController.open();
                                         } else {
+                                          await provider.vibrate(4);
 //                                          await Dialogs.showAdDialog(context);
                                           await Dialogs.showAdDialog(
                                             context,
+                                            unlockWord: true,
                                           );
                                         }
-                                        await provider.vibrate(1);
 //        subjectTapped(context, index);
 //        provider.changeSubjectIndex(index);
                                       },
@@ -252,6 +256,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                         return Center(
                           child: GestureDetector(
                             onTap: () {
+                              provider.vibrate(1);
                               if (widget.style == libraryStyle.unlocked) {
                                 provider.navigateTo(
                                   LearningScreen(
@@ -376,6 +381,7 @@ class _LibraryScreenState extends State<LibraryScreen>
                               delay: 0.5,
                               child: GestureDetector(
                                 onTap: () async {
+                                  provider.vibrate(2);
                                   if (inSearch) {
                                     setState(() {
                                       inSearch = false;
@@ -453,20 +459,24 @@ class _LibraryScreenState extends State<LibraryScreen>
                                       return InkWell(
                                         enableFeedback: true,
                                         onTap: () async {
+                                          provider.vibrate(1);
                                           // controller.move(index);
                                           pageCategoryController.animateToPage(
                                               index,
                                               duration: animationDuration,
                                               curve: Curves.decelerate);
-                                          if (index < selectedIndex) {
-                                            pageVerbsController.previousPage(
-                                                duration: animationDuration,
-                                                curve: Curves.decelerate);
-                                          } else if (index > selectedIndex) {
-                                            pageVerbsController.nextPage(
-                                                duration: animationDuration,
-                                                curve: Curves.decelerate);
-                                          }
+//                                          Future.delayed(
+//                                              Duration(milliseconds: 200), () {
+//                                            if (index < selectedIndex) {
+//                                              pageVerbsController.previousPage(
+//                                                  duration: animationDuration,
+//                                                  curve: Curves.decelerate);
+//                                            } else if (index > selectedIndex) {
+//                                              pageVerbsController.nextPage(
+//                                                  duration: animationDuration,
+//                                                  curve: Curves.decelerate);
+//                                            }
+//                                          });
 
 //                                        Future.delayed(
 //                                            Duration(
@@ -807,7 +817,7 @@ class PhrasalVerbFullScreen extends StatelessWidget {
               opacity: revealedPercent,
               child: Container(
                 padding: EdgeInsets.only(top: height / 20),
-                color: kLDarkBlue,
+                color: Colors.white,
                 child: PhrasalVerbMenu(
                   phrasalVerb: phrasalVerb,
                   color: kDarkBlue,

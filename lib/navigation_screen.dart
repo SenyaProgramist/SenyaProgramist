@@ -10,6 +10,7 @@ import 'package:phrasal_verbs/model/shared_prefs.dart';
 import 'package:phrasal_verbs/screens/tic_tac_toe_screen.dart';
 import 'const.dart';
 import 'package:provider/provider.dart';
+
 import 'package:phrasal_verbs/model/data_provider.dart';
 import 'package:phrasal_verbs/model/verbs_bank.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -57,6 +58,7 @@ class _NavigationScreenState extends State<NavigationScreen>
     var size = MediaQuery.of(context).size;
     var width = size.width;
     var height = size.height;
+    var provider = Provider.of<DataProvider>(context);
     Widget flare(MenuItem item) {
       return Padding(
         padding: EdgeInsets.only(top: height / 50),
@@ -114,6 +116,7 @@ class _NavigationScreenState extends State<NavigationScreen>
           Expanded(
             child: TabBar(
               onTap: (index) {
+                provider.vibrate(1);
                 setState(() {
                   active = items[index];
                 });

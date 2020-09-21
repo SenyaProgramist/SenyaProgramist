@@ -202,6 +202,7 @@ class _QuizScreenState extends State<QuizScreen>
                 data: provider.nameOfPhrasalVerb(options[i]),
                 label: getLabel(i + 1),
                 onTap: () async {
+                  provider.vibrate(2);
                   progressController.stop();
                   if (!freeze) {
                     freeze = true;
@@ -213,8 +214,10 @@ class _QuizScreenState extends State<QuizScreen>
                       colors[rightAnswer(level)] =
                           rightColor;
                       if (i == rightAnswer(level)) {
+                        provider.vibrate(3);
                         score = score + reward;
                       } else {
+                        provider.vibrate(5);
                         mistake.add(correctAnswers[level - 1]);
                       }
                     });
@@ -222,7 +225,7 @@ class _QuizScreenState extends State<QuizScreen>
                     if (level == correctAnswers.length) {
                       provider.navigateTo(
                         ResultScreen(
-                          general: widget.general,
+                          general: false,
                           score: score,
                           right: rightColor,
                           wrong: wrongColor,

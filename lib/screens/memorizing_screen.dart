@@ -232,7 +232,6 @@ class _MemorizingScreenState extends State<MemorizingScreen>
                     ),
                   ),
                 ),
-
                 Container(
                   height: height / 12,
                   decoration: BoxDecoration(
@@ -279,8 +278,7 @@ class _MemorizingScreenState extends State<MemorizingScreen>
         pageSnapping: true,
         itemBuilder: (context, item) {
           return Container(
-              decoration: BoxDecoration(
-              ),
+              decoration: BoxDecoration(),
               padding: EdgeInsets.symmetric(
                 horizontal: width / 20,
               ),
@@ -296,7 +294,7 @@ class _MemorizingScreenState extends State<MemorizingScreen>
                     accepted: boolList[i],
                     data: options[i],
                     color: color,
-                    onTap: () {
+                    onRight: () {
                       setState(() {
                         boolList[i] = true;
                       });
@@ -304,7 +302,7 @@ class _MemorizingScreenState extends State<MemorizingScreen>
                     onFailed: () {
                       controller.forward();
                     },
-                    callback: () async {
+                    onComplete: () async {
                       setState(() {
                         score = score + reward;
                       });
@@ -380,17 +378,17 @@ List<bool> boolList = [
 class WordCellAnswer extends StatelessWidget {
   const WordCellAnswer(
       {Key key,
-      this.onTap,
+      this.onRight,
       this.data,
       this.color,
       this.onFailed,
       this.accepted,
-      this.callback})
+      this.onComplete})
       : super(key: key);
   final String data;
   final bool accepted;
-  final Function callback;
-  final Function onTap;
+  final Function onComplete;
+  final Function onRight;
   final Function onFailed;
   final Color color;
 
@@ -415,13 +413,16 @@ class WordCellAnswer extends StatelessWidget {
               scaleCoefficient: 0.9,
               onTap: () {
                 if (provider.answer(data)) {
-                  onTap();
+                  provider.vibrate(1);
+                  onRight();
                 } else {
+                  provider.vibrate(5);
                   onFailed();
                 }
                 Future.delayed(Duration(seconds: 1), () {
                   if (provider.completed()) {
-                    callback();
+                    provider.vibrate(3);
+                    onComplete();
                   }
                 });
               },

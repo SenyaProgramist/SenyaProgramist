@@ -33,7 +33,7 @@ class ResultScreen extends StatefulWidget {
       {Key key,
       this.index = 2,
       this.score,
-      this.general = true,
+      this.general = false,
       this.right,
       this.wrong,
       this.verbs = const [],
@@ -87,7 +87,7 @@ class _ResultScreenState extends State<ResultScreen>
         progressController.value.toString();
         progressAnimation.toString();
         if (progressController.isCompleted) {
-          if (widget.score == 15) {
+          if (widget.score == 15 && !widget.general) {
             confettiController.play();
           }
         }
@@ -289,6 +289,7 @@ class _ResultScreenState extends State<ResultScreen>
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
+                        provider.vibrate(2);
                         provider.navigateTo(
                           widget.widgetToGoBack,
                           context,
@@ -306,8 +307,10 @@ class _ResultScreenState extends State<ResultScreen>
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          provider.vibrate(2);
+
                           int scoreLastLevel = await provider.scoreLastLevel();
-                          bool newLevel = scoreLastLevel > 90;
+                          bool newLevel = scoreLastLevel > 90 ?? false;
                           if (newLevel) {
                             await provider.unlockLevel();
                           }
@@ -318,7 +321,7 @@ class _ResultScreenState extends State<ResultScreen>
                                 true,
                               );
                             } else {
-                              if (widget.score == 15) {
+                              if (widget.score == 15 && !widget.general) {
                                 await provider.showRateDialog(
                                   context,
                                   false,

@@ -23,10 +23,10 @@ class ScoreProgressIndicator extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: isResult
               ? [
-                  BoxShadow(
-                      color: Colors.yellow.shade600.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 10)
+//                  BoxShadow(
+//                      color: Colors.yellow.shade300.withOpacity(0.3),
+//                      spreadRadius: 1,
+//                      blurRadius: 10)
                 ]
               : null),
       child: LinearPercentIndicator(

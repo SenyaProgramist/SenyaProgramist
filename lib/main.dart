@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flare_splash_screen/flare_splash_screen.dart';
+
 import 'package:phrasal_verbs/navigation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:phrasal_verbs/model/shared_prefs.dart';
@@ -9,16 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:phrasal_verbs/const.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 //  var prefs = await SharedPreferences.getInstance();
 //  await prefs.clear();
-  if (await SharedPreferencesTest.getLevelsInitialized() == false) {
-    print('were not initialized');
-    for (var level in PhrasalVerbsBank().levels) {
-      await DBProvider.db.insertLevel(level);
-    }
-    await SharedPreferencesTest.selLevelsInitialized();
-  }
+
   runApp(MyApp());
 }
 
@@ -30,14 +25,33 @@ class MyApp extends StatelessWidget {
       create: (context) => DataProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-               title: 'Flutter Demo',
+        title: 'Flutter Demo',
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors
               .pink[800], //Changing this will change the color of the TabBar
           accentColor: Colors.cyan[100],
         ),
-        home: NavigationScreen(),
+//home: NavigationScreen(),
+        home: SplashScreen.navigate(
+          name: 'assets/beginloop2.flr',
+          next: (_) => NavigationScreen(),
+          until: () async {
+            print('START');
+            if (await SharedPreferencesTest.getLevelsInitialized() == false) {
+              print('were not initialized');
+              for (var level in PhrasalVerbsBank().levels) {
+                await DBProvider.db.insertLevel(level);
+              }
+              await SharedPreferencesTest.selLevelsInitialized();
+            }
+            print('END');
+          },
+          startAnimation: 'begin+loop',
+          endAnimation: 'finish',
+//          loopAnimation: 'loop',
+          backgroundColor: Colors.white,
+        ),
       ),
     );
   }

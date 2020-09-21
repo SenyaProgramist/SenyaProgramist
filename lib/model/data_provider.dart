@@ -22,21 +22,27 @@ import 'package:get_it/get_it.dart';
 
 class DataProvider extends ChangeNotifier {
   Future vibrate(int volume) async {
-//    if (await Vibrate.canVibrate) {
-//      if (volume == 1) {
-//        var _type = FeedbackType.light;
-//        Vibrate.feedback(_type);
-//      } else if (volume == 2) {
-//        var _type = FeedbackType.medium;
-//        Vibrate.feedback(_type);
-//      } else if (volume == 3) {
-//        var _type = FeedbackType.success;
-//        Vibrate.feedback(_type);
-//      } else if (volume == 4) {
-//        var _type = FeedbackType.error;
-//        Vibrate.feedback(_type);
-//      }
-//    }
+    if (await Vibrate.canVibrate) {
+      var _type;
+      switch (volume) {
+        case 1:
+          _type = FeedbackType.light;
+          break;
+        case 2:
+          _type = FeedbackType.medium;
+          break;
+        case 3:
+          _type = FeedbackType.success;
+          break;
+        case 4:
+          _type = FeedbackType.warning;
+          break;
+        case 5:
+          _type = FeedbackType.error;
+          break;
+      }
+      Vibrate.feedback(_type);
+    }
   }
 
   List<String> tempLikedVerbs = [];
@@ -66,9 +72,10 @@ class DataProvider extends ChangeNotifier {
     await Dialogs.showRateDialog(context, newLevel: newLevel);
   }
 
-  Future showAdDialog(BuildContext context, bool newLevel) async {
+  Future showAdDialog(BuildContext context, {bool unlockWord = true}) async {
     await Dialogs.showAdDialog(
       context,
+      unlockWord: unlockWord,
     );
   }
 
@@ -136,7 +143,7 @@ class DataProvider extends ChangeNotifier {
         levels: await DBProvider.db.retrieveAllLevels());
     int res = PhrasalVerbsBank.levelScoreFinal(lastLevels);
 
-    return res;
+    return res ?? 0;
   }
 
   Future unlockLevel() async {

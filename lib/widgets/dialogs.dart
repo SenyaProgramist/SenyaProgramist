@@ -18,6 +18,9 @@ class Dialogs {
           label: skip ? 'SKIP' : 'RATE',
           onTap: () async {
             if (skip) {
+              if (askToRate) {
+                await RateModel().ratingDismissed();
+              }
               Navigator.pop(context);
             } else {
               await RateModel().showRateDialog(context);
@@ -33,8 +36,9 @@ class Dialogs {
       btnOk: _dialogButton(!askToRate, context),
       body: Body(
           svg: 'winner',
+          confetti: true,
           mainText:
-              '${newLevel ? 'You\'ve just opened a new level?' : 'You\'ve just mastered a handful of new words while playing!'} ${askToRate ? 'Did you enjoy it?' : ''}',
+              '${newLevel ? 'You\'ve just opened a new level!' : 'You\'ve just mastered a handful of new words while playing!'} ${askToRate ? 'Did you enjoy it?' : ''}',
           title: newLevel ? 'Congratulations!' : 'Good job!'),
       dismissOnTouchOutside: false,
     ).show();
@@ -44,9 +48,10 @@ class Dialogs {
       {bool unlockWord = true}) async {
     Widget _dialogButton(BuildContext context) {
       return DialogButton(
-          skip: false,
-          label: 'WATCH AD',
-          onTap: () async {
+          skip: true,
+          label: 'OK',
+          onTap: () {
+            Navigator.pop(context);
 //            await RateModel().showRateDialog(context);
           });
     }
@@ -63,8 +68,12 @@ class Dialogs {
       body: Body(
         svg: 'padlock',
         title: '',
-        mainText: 'You can unlock a word by learning it',
-        or: true,
+        confetti: false,
+        or: false,
+        mainText: unlockWord
+            ? 'You can unlock a word by learning it'
+            : 'To unlock a new level you should reach 90% progress',
+        // or: true,
       ),
       dismissOnTouchOutside: true,
     ).show();
@@ -83,7 +92,7 @@ class Body extends StatelessWidget {
       this.mainText,
       this.svg = 'winner',
       this.or = false,
-      this.confetti,
+      this.confetti = false,
       this.title})
       : super(key: key);
   @override
@@ -94,7 +103,7 @@ class Body extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
-        or ? Container() : Confetti(),
+        !confetti ? Container() : Confetti(),
         Container(
           color: Colors.transparent,
           padding: EdgeInsets.symmetric(

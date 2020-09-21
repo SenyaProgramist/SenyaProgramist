@@ -27,6 +27,7 @@ class LikeStarButton extends StatelessWidget {
       ),
       isLiked: provider.isTempLiked(phrasalVerb),
       onTap: (bool) async {
+       await provider.vibrate(1);
         Future.delayed(Duration(milliseconds: 500)).then((e) {
           provider.tempLikeUnlikeList(phrasalVerb, !bool);
         });

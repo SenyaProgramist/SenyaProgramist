@@ -49,20 +49,22 @@ class GamesScreen extends StatelessWidget {
               ),
             ),
           ),
-          Center(
+          Align(
+            alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SizedBox(height: height/25,),
                 GameCard(
                   label: 'QUIZ',
                   iconData: 'qa',
-                  delay: 0,
+                  delay: 1,
                   navigateTo: QuizScreen(true),
                 ),
                 GameCard(
                   label: 'PUZZLE',
                   iconData: 'fit',
-                  delay: 1,
+                  delay: 1.5,
                   navigateTo: MemorizingScreen(true),
                 ),
                 GameCard(
@@ -114,6 +116,7 @@ class GameCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (!comingSoon) {
+            provider.vibrate(2);
             provider.navigateTo(navigateTo, context,
                 );
           }

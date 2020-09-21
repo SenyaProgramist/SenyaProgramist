@@ -307,7 +307,7 @@ class LevelPage extends StatelessWidget {
                   style: TextStyle(
                       color: isLocked ? Colors.black26 : kDarkBlue,
                       fontSize: width / 13,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w900),
                 ),
                 Container(
 //                  decoration: BoxDecoration(color: kDBackGround, shape: BoxShape.circle),
@@ -381,8 +381,8 @@ class TrainingButton extends StatelessWidget {
       begin: -width / 15,
       child: GestureDetector(
         onTap: () async {
-          await provider.vibrate(3);
           if (!isLocked) {
+            await provider.vibrate(2);
             await provider.setTempLikedVerbs();
             provider.navigateTo(
               LearningScreen(
@@ -392,6 +392,9 @@ class TrainingButton extends StatelessWidget {
               ),
               context,
             );
+          } else {
+            await provider.vibrate(5);
+            await provider.showAdDialog(context, unlockWord: false);
           }
 
 //        subjectTapped(context, index);
@@ -407,8 +410,8 @@ class TrainingButton extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                     color: progress != 15
-                        ? Colors.grey.shade300
-                        : color.withOpacity(0.5),
+                        ? Colors.grey.shade200
+                        : color.withOpacity(0.7),
                     spreadRadius: 1,
                     blurRadius: 7,
                     offset: Offset(
@@ -435,21 +438,19 @@ class TrainingButton extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(width / 15),
                         color: isLocked ? Colors.black12 : null,
-                        boxShadow: [
-//                        BoxShadow(
-//                          color: isLocked
-//                              ? Colors.transparent
-//                              : Colors.orangeAccent
-//                                  .withOpacity(0.3),
-//                          offset: Offset(width / 100, 0),
-//                          spreadRadius: 1,
-//                          blurRadius: 10,
-//                        )
+                        boxShadow: progress==15? null:[
+                          BoxShadow(
+                            color: isLocked
+                                ? Colors.transparent
+                                : Colors.orangeAccent.withOpacity(0.4),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                          )
                         ],
                         gradient: isLocked
                             ? null
                             : LinearGradient(
-                                colors: [color, color.withOpacity(0.9)],
+                                colors: [color, color.withOpacity(1)],
                                 begin: Alignment.bottomLeft,
                                 end: Alignment.topRight)),
                     child: SizeAnimation(

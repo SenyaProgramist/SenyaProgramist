@@ -140,12 +140,14 @@ class _LearningScreenState extends State<LearningScreen>
                   controller: swiperController,
                   scrollDirection: Axis.horizontal,
                   onIndexChanged: (index) {
+                    provider.vibrate(1);
                     if (index == 4) {
                       setState(() {
                         active = true;
                       });
                     }
                   },
+
                   loop: false,
                   itemCount: 5,
                   viewportFraction: width / 450, //amount of screen taken
@@ -182,13 +184,14 @@ class _LearningScreenState extends State<LearningScreen>
                     onTap: () {
                       provider.saveFromTempLikedVerbs();
                       if (active) {
+                        provider.vibrate(2);
                         provider.navigateTo(
-                            MemorizingScreen(
-                              false,
-                              category: widget.category,
-                              index: widget.index,
-                            ),
-                            context,
+                          MemorizingScreen(
+                            false,
+                            category: widget.category,
+                            index: widget.index,
+                          ),
+                          context,
                         );
                       } else {
                         swiperController.next();
@@ -244,71 +247,66 @@ class PhrasalVerbCard extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var provider = Provider.of<DataProvider>(context);
     var screenSize = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () async {
-        await provider.vibrate(1);
-      },
-      child: Container(
-        padding: EdgeInsets.only(
+    return Container(
+      padding: EdgeInsets.only(
 //          left: width / 50,
 //          right: width / 20,
-          top: height / 100,
-          bottom: height / 15,
-        ),
-        child: Container(
-          //content padding
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(width / 20),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                    color: kDarkBlue.withOpacity(0.1))
-              ]),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(screenSize.width / 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.transparent),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(screenSize.width / 20),
-                        )),
-                    child: Text(
-                      provider.nameOfPhrasalVerb(pV),
-                      style: TextStyle(
-                          fontSize: width / 12,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: width / 1000,
-                          color: kDarkBlue),
-                    ),
+        top: height / 100,
+        bottom: height / 15,
+      ),
+      child: Container(
+        //content padding
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(width / 20),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                  color: kDarkBlue.withOpacity(0.1))
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(screenSize.width / 20),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(screenSize.width / 20),
+                      )),
+                  child: Text(
+                    provider.nameOfPhrasalVerb(pV),
+                    style: TextStyle(
+                        fontSize: width / 12,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: width / 1000,
+                        color: kDarkBlue),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      right: width / 20,
-                    ),
-                    child: LikeStarButton(
-                      phrasalVerb: pV,
-                    ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    right: width / 20,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: height / 40,
-              ),
-              PhrasalVerbMenu(
-                phrasalVerb: pV,
-                color: kDarkBlue,
-              )
-            ],
-          ),
+                  child: LikeStarButton(
+                    phrasalVerb: pV,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: height / 40,
+            ),
+            PhrasalVerbMenu(
+              phrasalVerb: pV,
+              color: kDarkBlue,
+            )
+          ],
         ),
       ),
     );

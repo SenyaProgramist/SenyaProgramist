@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
 class RateModel {
-  RateMyApp rateMyApp = RateMyApp(
-    preferencesPrefix: 'rateMyApp_',
-      minDays: 0,
-      minLaunches: 0,
-      remindDays: 3,
-      remindLaunches: 3,
-    googlePlayIdentifier: 'fr.skyost.example',
-    appStoreIdentifier: '1491556149',
+  RateMyApp _rateMyApp = RateMyApp(
+    preferencesPrefix: 'phrasalVerbs',
+    minDays: 1,
+    minLaunches: 2,
+    remindLaunches: 2,
+    remindDays: 1,
+    googlePlayIdentifier: 'com.arseniynasikovskiy.phrasal_verbs',
+    appStoreIdentifier: 'com.arseniynasikovskiy.phrasal-verbs',
   );
 
-   Future<bool> shouldOpenDialog() async {
-    await rateMyApp.init();
-    return rateMyApp.shouldOpenDialog;
+  Future<bool> shouldOpenDialog() async {
+    await _rateMyApp.init();
+    return _rateMyApp.shouldOpenDialog;
   }
 
   Future<bool> initialize() async {
-    await rateMyApp.init();
+    await _rateMyApp.init();
     return true;
   }
 
   Future showStarRateDialog(BuildContext context) async {
     if (await initialize()) {
-      await rateMyApp.showStarRateDialog(
+      await _rateMyApp.showStarRateDialog(
         context,
         title: 'Rate this app', // The dialog title.
         message:
-            'You like this app ? Then take a little bit of your time to leave a rating :', // The dialog message.
+            'You like this app ? Then take a little bit of your time to leave a rating', // The dialog message.
         actionsBuilder: (_, stars) {
           // Triggered when the user updates the star rating.
           return [
@@ -41,7 +41,7 @@ class RateModel {
                     ' star(s) !');
                 // You can handle the result as you want (for instance if the user puts 1 star then open your contact page, if he puts more then open the store page, etc...).
                 // This allows to mimic the behavior of the default "Rate" button. See "Advanced > Broadcasting events" for more information :
-                await rateMyApp.callEvent(RateMyAppEventType.rateButtonPressed);
+                await _rateMyApp.callEvent(RateMyAppEventType.rateButtonPressed);
                 Navigator.pop<RateMyAppDialogButton>(
                     context, RateMyAppDialogButton.rate);
               },
@@ -58,15 +58,20 @@ class RateModel {
         ),
         starRatingOptions:
             StarRatingOptions(), // Custom star bar rating options.
-        onDismissed: () => rateMyApp.callEvent(RateMyAppEventType
+        onDismissed: () => _rateMyApp.callEvent(RateMyAppEventType
             .laterButtonPressed), // Called when the user dismissed the dialog (either by taping outside or by pressing the "back" button).
       );
     }
   }
 
+  Future ratingDismissed() async {
+    await initialize();
+    await _rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed);
+  }
+
   Future showRateDialog(BuildContext context) async {
     if (await initialize()) {}
-    await rateMyApp.showRateDialog(
+    await _rateMyApp.showRateDialog(
       context,
       title: 'Rate this app', // The dialog title.
       message:
@@ -93,7 +98,7 @@ class RateModel {
       ignoreIOS:
           false, // Set to false if you want to show the native Apple app rating dialog on iOS.
       dialogStyle: DialogStyle(), // Custom dialog styles.
-      onDismissed: () => rateMyApp.callEvent(RateMyAppEventType
+      onDismissed: () => _rateMyApp.callEvent(RateMyAppEventType
           .laterButtonPressed), // Called when the user dismissed the dialog (either by taping outside or by pressing the "back" button).
       // actionsBuilder: (_) => [], // This one allows you to use your own buttons.
     );

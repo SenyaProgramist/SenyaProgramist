@@ -76,8 +76,9 @@ class _QuizScreenTemplateState extends State<QuizScreenTemplate> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
+                            Navigator.pop(context);
+//                            Navigator.of(context)
+//                                .popUntil((route) => route.isFirst);
 
                             provider.cleanAnswers();
                           },
